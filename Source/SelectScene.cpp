@@ -163,45 +163,7 @@ void SelectScene::Draw2D()
 	auto spec = Status::GetPlayerSpec(mnSelectNum); // 選択中のステータスをゲット
 
 
-	// 選択中の文字やゲージのやつ
-	{   // 選択しているやつだけ表示
-
-		int x = Utility::SCREEN_WIDTH / 2 + 100;
-		int y = Utility::SCREEN_HEIGHT / 2 - 300;
-		int color = GetColor(255, 255, 255);
-		int stringY = y + 130;
-		// ---------ステータス系--------------------------
-		// HP
-		DrawFormatStringToHandle(x, stringY, color, mnFontNormal,
-			"体力          %d", (int)spec.hp);
-		// 速さ
-		DrawFormatStringToHandle(x, stringY + 60, color, mnFontNormal,
-			"速さ          %d", (int)spec.speed);
-		// 最大速度
-		DrawFormatStringToHandle(x, stringY + 120, color, mnFontNormal,
-			"最大速度      %d", (int)spec.maxSpeed);
-		// 攻撃力
-		DrawFormatStringToHandle(x, stringY + 180, color, mnFontNormal,
-			"攻撃力        %d", (int)spec.normalAttack);
-		// 追跡弾攻撃力
-		DrawFormatStringToHandle(x, stringY + 240, color, mnFontNormal,
-			"追跡弾攻撃力  %d", (int)spec.homingAttack);
-		// スキルの説明
-		DrawFormatStringToHandle(x, stringY + 300, color, mnFontNormal,
-			"%s", spec.skillmemo.c_str());
-
-
-		// 名前
-		DrawFormatStringToHandle(
-			x,
-			y,
-			GetColor(255, 255, 255),
-			mnFontNormal,
-			"%s",
-			spec.name.c_str()
-		);
-	}
-
+	
 	// 左の枠
 	int SelectNow = mnSelectNum;
 	for (int i = 1; i <= mnSelectMax; i++)
@@ -274,6 +236,46 @@ void SelectScene::Draw2D()
 	}
 
 
+	// 選択中の文字やゲージのやつ
+	{   // 選択しているやつだけ表示
+
+		int x = Utility::SCREEN_WIDTH / 2 + 100;
+		int y = Utility::SCREEN_HEIGHT / 2 - 300;
+		int color = GetColor(255, 255, 255);
+		int stringY = y + 130;
+		// ---------ステータス系--------------------------
+		// HP
+		DrawFormatStringToHandle(x, stringY, color, mnFontNormal,
+			"体力          %d", (int)spec.hp);
+		// 速さ
+		DrawFormatStringToHandle(x, stringY + 60, color, mnFontNormal,
+			"速さ          %d", (int)spec.speed);
+		// 最大速度
+		DrawFormatStringToHandle(x, stringY + 120, color, mnFontNormal,
+			"最大速度      %d", (int)spec.maxSpeed);
+		// 攻撃力
+		DrawFormatStringToHandle(x, stringY + 180, color, mnFontNormal,
+			"攻撃力        %d", (int)spec.normalAttack);
+		// 追跡弾攻撃力
+		DrawFormatStringToHandle(x, stringY + 240, color, mnFontNormal,
+			"追跡弾攻撃力  %d", (int)spec.homingAttack);
+		// スキルの説明
+		DrawFormatStringToHandle(x, stringY + 300, color, mnFontNormal,
+			"%s", spec.skillmemo.c_str());
+
+		// 名前
+		DrawFormatStringToHandle(
+			x,
+			y,
+			GetColor(255, 255, 255),
+			mnFontNormal,
+			"%s",
+			spec.name.c_str()
+		);
+	}
+
+
+
 	if (mbDirection)
 	{
 		SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)mfGraphAlpha);
@@ -314,9 +316,6 @@ void SelectScene::Finalize()
 {
 	// カメラ操作を有効に戻す
 	Master::mpCamera->SetEnableControl(true);
-
-	// フォントハンドルの削除
-	DeleteFontToHandle(mnFontNormal);
 
 	// グラフィックハンドルの削除
 	DeleteGraph(mnHandle_Select);
