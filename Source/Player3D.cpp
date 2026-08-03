@@ -27,7 +27,7 @@ Player3D::Player3D(VECTOR initPos, Status* status, bool isSeparateAnim)
 	SetTag(Object3D::T_Player3D); // タグ
 
 	// モデルの作成
-	mpModel = new Model(status->GetFileName(), initPos, isSeparateAnim);
+	mpModel = new Model(status->GetModelName(), initPos, isSeparateAnim);
 	// ロックオンのnew
 	mpLockOn = new HpBar(this);
 	mpLockMark = new LockOnMark(this);

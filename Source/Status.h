@@ -28,47 +28,55 @@ public:
 		float maxSpeed;        // 最大速度
 
 		float normalAttack;    // 攻撃力
-		float homingAttack;    // ホーミング攻撃力
+		float homingAttack;    // ホーミング弾の攻撃力
 		
 		SkillType skillType;   // スキルの種類
-		std::string skillmemo; // スキル説明
+		std::string skillmemo; // スキル説明テキスト
 	};
 
 
-	// ステータス返すやつ
+	// ステータスを返す関数
 	static StatusData GetPlayerSpec(int player); // プレイヤーのステータスを返すやつ
 	static StatusData GetEnemySpec(int enemy); // 敵のステータス返すやつ
 
+	// コンストラクタとデストラクタ
 	Status(const StatusData& data);
 	~Status();
 
-	// ゲッターセッター
+	// ゲッターセッター関係 Playerから取得するため
 	// HP関係
 	float GetBaseMaxHp() const { return mfMaxHp; } // 最大HP
 	void SetBaseMaxHp(float mhp) { mfMaxHp = mhp; }
 	float GetBaseHp() const { return mfHp; } // HP
+
 	// SPPED関係
 	float GetBaseMaxSpeed() const { return mfMaxSpeed; } // 最大SPEED
 	void SetBaseMaxSpeed(float msp) { mfMaxSpeed = msp; }
 	float GetBaseSpeed() const { return mfSpeed; } // SPEED
+
 	// ATTACK関係
 	float GetBaseAttack() const { return mfNormalAttack; } // 通常
 	float GetBaseHomingAttack() const { return mfHomingAttack; } // ホーミング
-	// FILENAME
-	const std::string& GetFileName() const { return msModelName; }
-	// ID関係
+
+	// モデルの名前の取得
+	const std::string& GetModelName() const { return msModelName; }
+
+	// IDの取得
 	int GetID() const { return mnNumber; }
-	// NAME関係
+	// 名前の取得
 	const std::string& GetBaseName() const { return msName; }
-	// Hp関係
-	void ApplyDamage(float applyDamage); // ダメージ
-	void ApplyHeal(); // 回復
-	// SPEED関係
-	void LimitSpeed(); // 最大速度を超えないように
+
 	// スキル種類のゲッター
 	SkillType GetSkillType() const { return mSkillType; }
 	// スキル名前
 	const std::string& GetBaseSkillMemo() const { return msSkillmemo; }
+
+
+	// 処理の関数
+	void ApplyHeal(); // 回復するための関数
+	void LimitSpeed(); // 最大速度を超えないようにするための関数
+	void ApplyDamage(float applyDamage); // ダメージをさせる関数
+
 
 private:
 	// ID
@@ -84,7 +92,7 @@ private:
 	float mfHomingAttack;
 	// NAME
 	std::string msName;
-	// FILENAME
+	// モデルの名前の保存メンバ
 	std::string msModelName;
 	// スキル説明
 	std::string msSkillmemo;
