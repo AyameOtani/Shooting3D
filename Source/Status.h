@@ -6,32 +6,31 @@ class Status
 {
 public:
 
+	// 機体によってスキルのタイプの列挙型
 	enum class SkillType
 	{
 		SKILL_NONE,
 
 		SKILL_ATTACK, // 自動攻撃+攻撃力アップ
-		SKILL_HEAL, // HPを最大HPの3/2まで回復
-		SKILL_GOD,  // 5秒間無敵
-
+		SKILL_HEAL,   // HPを最大HPの3/2まで回復
+		SKILL_GOD,    // 5秒間無敵
 
 		SKILL_MAX,
 	};
 
 	struct StatusData
 	{
-		int num; // 番号
-		std::string name; // 名前
-		std::string filename; // ファイル名前
-		float hp; // Hp
-		float speed; // 速さ
-		float maxSpeed; // 最大速度
+		int num;               // 番号
+		std::string name;      // 機体の名前
+		std::string modelName; // 機体のモデルの名前
+		float hp;              // HP
+		float speed;           // 速さ
+		float maxSpeed;        // 最大速度
 
-		float normalAttack; // 攻撃力
-		float homingAttack; // ホーミング攻撃力
-		std::string memo; // メモ
-
-		SkillType skillType; // スキルの種類
+		float normalAttack;    // 攻撃力
+		float homingAttack;    // ホーミング攻撃力
+		
+		SkillType skillType;   // スキルの種類
 		std::string skillmemo; // スキル説明
 	};
 
@@ -56,7 +55,7 @@ public:
 	float GetBaseAttack() const { return mfNormalAttack; } // 通常
 	float GetBaseHomingAttack() const { return mfHomingAttack; } // ホーミング
 	// FILENAME
-	const std::string& GetFileName() const { return msFileName; }
+	const std::string& GetFileName() const { return msModelName; }
 	// ID関係
 	int GetID() const { return mnNumber; }
 	// NAME関係
@@ -86,7 +85,7 @@ private:
 	// NAME
 	std::string msName;
 	// FILENAME
-	std::string msFileName;
+	std::string msModelName;
 	// スキル説明
 	std::string msSkillmemo;
 

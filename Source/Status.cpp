@@ -11,7 +11,7 @@ Status::Status(const StatusData& data)
 	, mfNormalAttack(data.normalAttack)
 	, mfHomingAttack(data.homingAttack)
 	, mnNumber(data.num)
-	, msFileName(data.filename)
+	, msModelName(data.modelName)
 	, mSkillType(data.skillType)
 	, msSkillmemo(data.skillmemo)
 {
@@ -70,7 +70,6 @@ Status::StatusData Status::GetPlayerSpec(int player)
 			15.0f,		 // MAXSPEED
 			10.0f,		 // Attack
 			30.0f,		 // HomingAttack
-			"初めの機体", // メモ
 			SkillType::SKILL_ATTACK, // 持っているスキル
 			"自動攻撃" // スキル効果
 		};
@@ -86,7 +85,6 @@ Status::StatusData Status::GetPlayerSpec(int player)
 			10.0f,		   // MAXSPEED
 			10.0f,		   // Attack
 			20.0f,		   // HomingAttack
-			"二番目の機体", // メモ
 			SkillType::SKILL_HEAL,
 			"HPを回復" // スキル効果
 		};
@@ -102,13 +100,12 @@ Status::StatusData Status::GetPlayerSpec(int player)
 			16.0f,		   // MAXSPEED
 			50.0f,		   // Attack
 			50.0f,		   // HomingAttack
-			"三番目の機体", // メモ
 			SkillType::SKILL_GOD,
 			"無敵状態" // スキル効果
 		};
 
 	default:
-		return { 9999,"例外", "例外",1.0f, 1.0f, 1.0f,  10.0f, 20.0f, "例外の機体", SkillType::SKILL_HEAL, "なし"};
+		return { 9999,"例外", "例外",1.0f, 1.0f, 1.0f,  10.0f, 20.0f, SkillType::SKILL_HEAL, "なし"};
 	}
 }
 
@@ -128,7 +125,6 @@ Status::StatusData Status::GetEnemySpec(int enemy)
 			15.0f,	  // MAXSPEED
 			10.0f,	  // Attack
 			20.0f,	  // HomingAttack
-			"敵1です", // メモ
 			SkillType::SKILL_NONE,
 			"なし" // スキル効果
 		};
@@ -144,7 +140,6 @@ Status::StatusData Status::GetEnemySpec(int enemy)
 			10.0f,		  // MAXSPEED
 			10.0f,		  // Attack
 			20.0f,		  // HomingAttack
-			"中ボスです",  // メモ
 			SkillType::SKILL_NONE,
 			"なし" // スキル効果
 		};
@@ -160,14 +155,13 @@ Status::StatusData Status::GetEnemySpec(int enemy)
 			10.0f,		  // MAXSPEED
 			10.0f,		  // Attack
 			20.0f,		  // HomingAttack
-			"中ボスです",  // メモ
 			SkillType::SKILL_NONE,
 			"なし" // スキル効果
 		};
 
 
 	default: // 例外
-		return { 9999,"未定義エネミー", "例外", 1.0f, 1.0f, 1.0f,  10.0f, 20.0f, "", SkillType::SKILL_NONE, "なし"};
+		return { 9999,"未定義エネミー", "例外", 1.0f, 1.0f, 1.0f,  10.0f, 20.0f, SkillType::SKILL_NONE, "なし"};
 	}
 }
 

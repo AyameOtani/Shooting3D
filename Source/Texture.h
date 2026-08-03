@@ -7,7 +7,6 @@ class Texture
 {
 public: // ファイルの名前、ポジション、フラグをコンストラクタの中身としているs
 	Texture(std::string fileName, VECTOR position, int transFlag);  // コンストラクタ
-
 	~Texture();  // デストラクタ
 
 	void Draw();    // 描画
@@ -30,6 +29,7 @@ public: // ファイルの名前、ポジション、フラグをコンストラクタの中身としているs
 
 
 	// 画像サイズ指定付き描画
+	// 参照でコピーではなくそのものを見るため高速
 	void DrawSize(const VECTOR& pos, const VECTOR& size) const
 	{
 		DrawExtendGraph(static_cast<int>(pos.x), static_cast<int>(pos.y),

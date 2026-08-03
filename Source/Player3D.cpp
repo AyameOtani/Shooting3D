@@ -573,6 +573,8 @@ void Player3D::LockOffTargets()
 // メインのロックオン関数 ヘルパー関数を統合管理
 void Player3D::LockOn()
 {
+	// ホーミング弾が飛んでいる時にロックオンをさせない処理
+	// ロックオンが二重になり、無限ホーミングが可能なため。
 	auto pBulletList = Master::mpSceneManager->GetCurrentScene()
 		->GetObjectManager()->GetObject3DListByTag(Object3D::T_PlayerBullet3D);
 
@@ -585,7 +587,6 @@ void Player3D::LockOn()
 			return;
 		}
 	}
-
 
 
 	// 時間管理の更新

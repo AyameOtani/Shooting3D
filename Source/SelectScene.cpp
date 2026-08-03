@@ -68,7 +68,7 @@ void SelectScene::Initialize()
 
 	// 初期モデル読み込み
 	auto spec = Status::GetPlayerSpec(mnSelectNum);
-	mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
+	mpModel = std::make_unique<Model>(spec.modelName, VGet(0.0f, 0.0f, 0.0f));
 	mModelPosY = MODEL_Y_POSITION; // 初期位置を1000にセット
 }
 
@@ -113,7 +113,7 @@ void SelectScene::Update()
 				mnSelectNum = 1;
 			}
 			auto spec = Status::GetPlayerSpec(mnSelectNum);
-			mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
+			mpModel = std::make_unique<Model>(spec.modelName, VGet(0.0f, 0.0f, 0.0f));
 			mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
 		}
 		// 上移動
@@ -125,7 +125,7 @@ void SelectScene::Update()
 				mnSelectNum = mnSelectMax;
 			}
 			auto spec = Status::GetPlayerSpec(mnSelectNum);
-			mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
+			mpModel = std::make_unique<Model>(spec.modelName, VGet(0.0f, 0.0f, 0.0f));
 			mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
 		}
 

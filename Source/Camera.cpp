@@ -58,27 +58,18 @@ void Camera::DefaultBackColor()
 
 void Camera::LookRange()
 {
-	// カメラ配置の「後」で比率と視野角を設定する（これで上書きされない）
+	// カメラ配置の「後」で比率と視野角を設定する
 	// アスペクト比：1200で描いて1920に伸ばす際の理論値 (0.625f)
 	// ※真ん中の形を保つための守り神
 	float aspect = (float)Utility::RENDER_WIDTH / (float)Utility::SCREEN_WIDTH;
 	SetCameraDotAspect(aspect);
 	// 視野角：広角にすることで「端っこ」の流れる速度をブーストする
-	// ※ここを PI / 2.0f などにすると、周辺の伸びが強烈になります
 	SetupCamera_Perspective(DX_PI_F / 1.5f);
 
 }
 
 void Camera::Update()
 {
-	//// カメラの向く対象の処理
-	//if (mpTarget == nullptr)
-	//{
-	//	// プレイヤーのオブジェクトを探し出している
-	//	mpTarget = Master::mpSceneManager->GetCurrentScene()
-	//		->GetObjectManager()->GetObject3DByTag(Object3D::T_Player3D);
-	//}
-
 	if (mpTarget != nullptr) // ターゲットがいなかったら
 	{
 		// 基準座標を対象の座標にする
@@ -100,7 +91,6 @@ void Camera::Update()
 		VECTOR temp;   // 作業用変数
 
 		// 球面上の座標を求める
-		//   ★DX_PI_F は 3.14 と同じ意味
 		// 250.0f は注視点からどれだけ離れているかという意味
 		// 距離は変えないで回転したい
 		const float distance = 210.0f;
