@@ -10,7 +10,6 @@
 #include <memory>
 #include "Utility.h"
 #include "ModelUtility.h"
-#include "PlayerAnim.h"
 #include "Player3D.h"
 #include "Enemy3D.h"
 #include "Rock3D.h"

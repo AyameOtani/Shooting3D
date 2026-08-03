@@ -93,4 +93,3 @@ private:
 	// スキル種類
 	SkillType  mSkillType = SkillType::SKILL_NONE;
 };
-

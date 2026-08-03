@@ -40,7 +40,6 @@
     <ClCompile Include="Source\Object3D.cpp" />
     <ClCompile Include="Source\ObjectManager.cpp" />
     <ClCompile Include="Source\Player3D.cpp" />
-    <ClCompile Include="Source\PlayerAnim.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
     <ClCompile Include="Source\Rock3D.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -82,7 +81,6 @@
     <ClInclude Include="Source\Object3D.h" />
     <ClInclude Include="Source\ObjectManager.h" />
     <ClInclude Include="Source\Player3D.h" />
-    <ClInclude Include="Source\PlayerAnim.h" />
     <ClInclude Include="Source\ResourceManager.h" />
     <ClInclude Include="Source\Rock3D.h" />
     <ClInclude Include="Source\Scene.h" />

@@ -100,32 +100,37 @@ void SelectScene::Update()
 	}
 
 
-	// キーで選択するやつ
-	// 下移動
-	if (InputManager::CheckDownKey(KEY_INPUT_S))
+	// ゲームシーンへの遷移演出がまだなら選択出来るようにする処理
+	// フラグの管理を入れないと遷移中に変えることが出来てしまうため。
+	if (!mbDirection)
 	{
-		mnSelectNum++;
-		if (mnSelectNum > mnSelectMax)
+		// 下移動
+		if (InputManager::CheckDownKey(KEY_INPUT_S))
 		{
-			mnSelectNum = 1;
+			mnSelectNum++;
+			if (mnSelectNum > mnSelectMax)
+			{
+				mnSelectNum = 1;
+			}
+			auto spec = Status::GetPlayerSpec(mnSelectNum);
+			mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
+			mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
 		}
-		auto spec = Status::GetPlayerSpec(mnSelectNum);
-		mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
-		mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
-	}
-	// 上移動
-	if (InputManager::CheckDownKey(KEY_INPUT_W))
-	{
-		mnSelectNum--;
-		if (mnSelectNum < 1)
+		// 上移動
+		if (InputManager::CheckDownKey(KEY_INPUT_W))
 		{
-			mnSelectNum = mnSelectMax;
+			mnSelectNum--;
+			if (mnSelectNum < 1)
+			{
+				mnSelectNum = mnSelectMax;
+			}
+			auto spec = Status::GetPlayerSpec(mnSelectNum);
+			mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
+			mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
 		}
-		auto spec = Status::GetPlayerSpec(mnSelectNum);
-		mpModel = std::make_unique<Model>(spec.filename, VGet(0.0f, 0.0f, 0.0f));
-		mModelPosY = MODEL_Y_POSITION; // モデルが変わったらY座標を1000に戻す
-	}
 
+	}
+	
 
 	// モデルを目標位置に近づける
 	// 今の位置　+= (目標位置 - 今の位) * 移動速さ
@@ -273,7 +278,6 @@ void SelectScene::Draw2D()
 			spec.name.c_str()
 		);
 	}
-
 
 
 	if (mbDirection)

@@ -19,6 +19,7 @@ private:
 	static constexpr float MOVE_MAX_X = 590.0f; // 最大移動X距離
 	static constexpr float MOVE_MAX_Y_U = 280.0f; // 最大移動Y上距離
 	static constexpr float MOVE_MAX_Y_D = 200.0f; // 最大移動Y下距離
+	static constexpr float LOCK_SPEED_RATE = 0.4f; // ロックオン中に速度を30%にするため
 	// int系
 	static const int BY_SPEED = 10; // 今のスピードに乗算する
 	// ロックオン関係

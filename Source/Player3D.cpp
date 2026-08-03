@@ -76,6 +76,12 @@ void Player3D::Update()
 
 	mvOldPosition = mvPosition;
 
+	// ロックオン処理
+	LockOn();
+	mpLockOn->UpdateBar();
+	mpLockMark->UpdateMark();
+
+
 	// 移動と回転処理
 	MoveEx();
 	RotationByMove();
@@ -84,16 +90,11 @@ void Player3D::Update()
 	ActiveSkill();
 	mpSkill->MainSkill(this);
 
-	// 攻撃処理
+	// 攻撃処理 ロックオン宙でなければ撃てるようにする
 	if (!mbLockOn)
 	{
 		Shot();
 	}
-
-	// ロックオン処理
-	LockOn();
-	mpLockOn->UpdateBar();
-	mpLockMark->UpdateMark();
 
 	// 点滅エフェクトの更新
 	mCurrentPhoto += 10.0f;
@@ -128,9 +129,9 @@ void Player3D::Draw()
 		int color = GetColor(255, 255, 255);
 		DrawFormatString(20, 60,  color, "X: %f, Y: %f, Z: %f ", mvPosition.x, mvPosition.y, mvPosition.z);
 		DrawFormatString(20, 80,  color, "スピード: %f", mfNowSpeed);
-		DrawFormatString(20, 100, color, "HP %f, SP %f, MSP %f", GetHp(), GetSpeed(), GetMaxSpeed());
-		DrawFormatString(20, 120, color, "Cool: %.1f", GetLockCoolTime());
-		DrawFormatString(20, 140, color, "攻撃力 %.1f", GetAttack());
+		DrawFormatString(20, 120, color, "HP %f, SP %f, MSP %f", GetHp(), GetSpeed(), GetMaxSpeed());
+		DrawFormatString(20, 150, color, "Cool: %.1f", GetLockCoolTime());
+		DrawFormatString(20, 170, color, "攻撃力 %.1f", GetAttack());
 	}
 
 	// ロックオン関連の描画
@@ -273,8 +274,9 @@ void Player3D::MoveEx()
 	{
 		mvMoveVec = VNorm(inputVec);
 
-		// ダッシュされていたら速くする
-		float targetSpeed = GetMaxSpeed();
+		// ダッシュ状態なら速度を速くする処理
+		float targetSpeed;
+
 		if (CheckHitKey(KEY_INPUT_LSHIFT))
 		{
 			mfNowSpeed += (mfSpeed * BY_SPEED);
@@ -286,6 +288,9 @@ void Player3D::MoveEx()
 			targetSpeed = GetSpeed();
 		}
 		
+		// ロックオン中なら速度を指定した%にするため
+		if (mbLockOn) { targetSpeed *= LOCK_SPEED_RATE; }
+
 		if (mfNowSpeed >= targetSpeed)
 		{
 			mfNowSpeed = targetSpeed;
@@ -466,6 +471,10 @@ void Player3D::UnlockFailedTargets()
 // 新しいターゲットをロック
 void Player3D::LockNewTarget()
 {
+	// クールタイム中はロックオン禁止
+	if (mfLockOnCoolTime > 0.0f) { return; }
+
+
 	mbLockOn = true; // ロックオンtrue
 
 	// 連続クールタイムが0か かつ ロック対象数に達していないか
@@ -556,16 +565,35 @@ void Player3D::LockOffTargets()
 {
 	mbLockOn = false; // ロックオン解除
 	mfLockDelay = 0;  // リセット
+
 }
 
 
 
-// メインのロックオン関数 - ヘルパー関数を統合管理
+// メインのロックオン関数 ヘルパー関数を統合管理
 void Player3D::LockOn()
-{		 	
+{
+	auto pBulletList = Master::mpSceneManager->GetCurrentScene()
+		->GetObjectManager()->GetObject3DListByTag(Object3D::T_PlayerBullet3D);
+
+	for (auto obj : pBulletList)
+	{
+		Bullet3D* pBullet = dynamic_cast<Bullet3D*>(obj);
+		if (pBullet && pBullet->IsHomingBullet())
+		{
+			// ホーミング弾が飛んでいるのでロックオン禁止
+			return;
+		}
+	}
+
+
+
 	// 時間管理の更新
 	UpdateLockCoolTime();
 	UpdateLockDelay();
+
+	// クールタイム中はロックオン禁止
+	if (mfLockOnCoolTime > 0.0f) { return; }
 
 	// ロック対象の整理
 	CleanupDeadLockedTargets();
